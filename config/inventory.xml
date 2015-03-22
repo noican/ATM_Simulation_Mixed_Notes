@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<money>
+  <notes>
+    <amount>50</amount>
+    <inventory>9</inventory>
+  </notes>
+  <notes>
+    <amount>20</amount>
+    <inventory>9</inventory>
+  </notes>
+  <notes>
+    <amount>30</amount>
+    <inventory>9</inventory>
+  </notes>
+</money>
