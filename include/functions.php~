@@ -70,15 +70,82 @@ function combination($amount_to_validate){
 		
 	} 
 
-	//mixed_combinations
-
-	//end of mixed combinations
 
 	if ($combinations>=1) {
 		return array ($combinations,$money_dispense, rand(0,$combinations-1));				
 	} else {
 		return array (0,$money_dispense, 0);
 	}
+
+}
+
+
+
+function validate_notes_inventory($note_inventory,$num_to_check_inventory) {
+	$existing_notes =  parse_this_file();	
+	$result = false;
+	foreach($existing_notes->children() as $bank_notes) {
+
+		$num_inventory = intval($bank_notes->inventory) ;
+	
+		if (intval($bank_notes->amount) == $note_inventory ) {
+			if (intval($bank_notes->inventory) >= $num_to_check_inventory) {
+				$result = true;
+			}
+		}
+	}
+	return $result;
+}
+
+
+//////////////////////////////////////////
+///// MIXED COMBINATION //////////////////
+/////////////////////////////////////////
+
+function mixed_combination($amount_to_withdraw) {
+	$existing_notes =  parse_this_file();
+	$combination = 0;
+	$money_dispense =array();
+	$money_combination =array();
+
+	$x = $amount_to_withdraw;
+
+	foreach($existing_notes->children() as $bank_notes) {
+
+	    	$xmlfile_amount = intval($bank_notes->amount) ;		
+		$xmlfile_inventory = intval($bank_notes->inventory) ;	
+
+		if ($x>=$xmlfile_amount) {
+			$a = $xmlfile_amount;
+			$b = $x/$xmlfile_amount;
+			$c = floor($b);
+
+			if (validate_notes_inventory($a,$c)) {
+				if ($c>=1) {		
+					$x = $x - ($a * $c);
+					array_push($money_combination,$a,$c);
+				} 
+			} 
+			array_push($money_dispense,$money_combination,$x);
+			$money_combination =array();
+		}	
+	
+	} 
+
+
+	$max_records = count($money_dispense)-1;
+
+	//echo '<pre>',print_r($money_dispense);
+	if ($money_dispense[$max_records] == 0) {
+		foreach($money_dispense as $dispense) {
+			if ($dispense[0]!=0 || $dispense[1]!=0) {
+				dispense_cash($dispense[0],$dispense[1]);
+			}
+		}
+		exit;
+	}
+
+	return $money_dispense;
 
 }
 

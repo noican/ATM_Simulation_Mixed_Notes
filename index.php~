@@ -7,13 +7,16 @@ show_inventory();
 
 if (isset($_POST['amount_withdrawn'])) {
 
-	$amount_to_withdraw = $_POST['amount_withdrawn'];
+	$amount_to_withdraw = intval($_POST['amount_withdrawn']);
 
 
 	if (is_numeric($amount_to_withdraw) && $amount_to_withdraw>0) {
 		
-		if (find_combination($amount_to_withdraw)!=0) {
 
+		$result_mixed_combination = mixed_combination($amount_to_withdraw);
+		$max_records = count($result_mixed_combination)-1;
+
+		if ($result_mixed_combination[$max_records] == 0) {	
 			echo 'Total amount dispensed : '. $amount_to_withdraw . '</br>';
 			echo '</br></br></br>';
 			echo 'Present Inventory: ';

@@ -2,14 +2,10 @@
 <money>
   <notes>
     <amount>50</amount>
-    <inventory>9</inventory>
+    <inventory>780</inventory>
   </notes>
   <notes>
     <amount>20</amount>
-    <inventory>9</inventory>
-  </notes>
-  <notes>
-    <amount>30</amount>
-    <inventory>9</inventory>
+    <inventory>0</inventory>
   </notes>
 </money>

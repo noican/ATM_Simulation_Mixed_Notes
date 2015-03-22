@@ -20,7 +20,18 @@ if (isset($_POST['amount_withdrawn'])) {
 			show_inventory();
 
 		} else {
-			echo 'Error : $'. $amount_to_withdraw .' is not divisible by existing notes.' ;
+
+			$result_mixed_combination = mixed_combination($amount_to_withdraw);
+			$max_records = count($result_mixed_combination)-1;
+			
+			if ($result_mixed_combination[$max_records] == 0) {	
+				echo 'Total amount dispensed : '. $amount_to_withdraw . '</br>';
+				echo '</br></br></br>';
+				echo 'Present Inventory: ';
+				show_inventory();
+			} else {
+				echo 'Error : $'. $amount_to_withdraw .' is not divisible by existing notes.' ;
+			}
 		}
 
 		echo '</br><a href="index.php">Refresh</a>';
